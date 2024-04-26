@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>TODOアプリ</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    input, button {
+        padding: 10px;
+        margin: 5px;
+        font-size: 16px;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    li {
+        margin: 8px 0;
+        background: #f0f0f0;
+        padding: 10px;
+        border-radius: 4px;
+    }
+    .delete {
+        margin-left: 20px;
+        color: red;
+        cursor: pointer;
+    }
+    .edit {
+        cursor: pointer;
+        float: right;
+        margin-right: 20px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>TODOアプリ</h1>
+    <input type="text" id="taskInput" placeholder="新しいタスクを入力">
+    <button onclick="addTask()">タスク追加</button>
+    <ul id="taskList"></ul>
+</div>
+
+<script>
+    document.getElementById('taskInput').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            addTask();
+        }
+    });
+
+    function addTask() {
+        var input = document.getElementById('taskInput');
+        var newTask = input.value;
+        if (newTask.trim() !== '') {
+            var li = document.createElement('li');
+            var taskText = document.createElement('span');
+            taskText.textContent = newTask;
+            taskText.className = 'task-text';
+            taskText.contentEditable = true;
+            taskText.style.display = 'inline-block';
+            taskText.style.width = '80%';
+            
+            var deleteBtn = document.createElement('span');
+            deleteBtn.textContent = '削除';
+            deleteBtn.className = 'delete';
+            deleteBtn.onclick = function() {
+                this.parentElement.remove();
+            };
+
+            li.appendChild(taskText);
+            li.appendChild(deleteBtn);
+            document.getElementById('taskList').appendChild(li);
+            input.value = ''; // インプットを空にする
+        }
+    }
+</script>
+</body>
+</html>
